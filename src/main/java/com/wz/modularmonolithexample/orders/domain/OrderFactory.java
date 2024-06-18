@@ -3,8 +3,9 @@ package com.wz.modularmonolithexample.orders.domain;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.stereotype.Service;
 
+import com.wz.modularmonolithexample.orders.application.OrderCreateDTO;
+
 import lombok.RequiredArgsConstructor;
-import com.wz.modularmonolithexample.dtos.OrderCreateDTO;
 
 @Service
 @RequiredArgsConstructor

@@ -12,8 +12,8 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.wz.modularmonolithexample.dtos.ProductDTO;
-import com.wz.modularmonolithexample.dtos.ProductUpdatedEvent;
+import com.wz.modularmonolithexample.products.application.ProductDTO;
+import com.wz.modularmonolithexample.products.application.ProductUpdatedEvent;
 import com.wz.modularmonolithexample.shared.event.EventDispatcher;
 
 import lombok.Getter;
@@ -21,7 +21,7 @@ import lombok.Getter;
 @Getter
 @Entity
 @Table(name = "products")
-class Product {
+public class Product {
 
     private final static ModelMapper mapper = new ModelMapper();
 
@@ -51,24 +51,18 @@ class Product {
     @Column(name = "price")
     private BigDecimal price;
 
-    public ProductDTO toDTO() {
-        var dto = new ProductDTO();
-        mapper.map(this, dto);
-        return dto;
-    }
-
-    public ProductUpdatedEvent toUpdatedEvent() {
-        var event = new ProductUpdatedEvent();
-        mapper.map(this, event);
-        return event;
-    }
-
     public void update(ProductDTO product) {
         this.name = product.getName();
         this.description = product.getDescription();
         this.price = product.getPrice();
         productsRepository.save(this);
         eventDispatcher.dispatch(toUpdatedEvent());
+    }
+
+    private ProductUpdatedEvent toUpdatedEvent() {
+        var event = new ProductUpdatedEvent();
+        mapper.map(this, event);
+        return event;
     }
 
 }

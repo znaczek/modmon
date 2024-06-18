@@ -1,2 +1,0 @@
-org.springframework.modulith.core.ApplicationModuleDetectionStrategy=\
-  com.wz.modularmonolithexample.configuration.ModuleDetectionStrategy

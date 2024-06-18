@@ -1,4 +1,4 @@
-package com.wz.modularmonolithexample.dtos;
+package com.wz.modularmonolithexample.orders.application;
 
 import java.math.BigDecimal;
 

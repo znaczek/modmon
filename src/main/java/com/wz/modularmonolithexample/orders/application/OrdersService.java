@@ -1,16 +1,21 @@
-package com.wz.modularmonolithexample.orders.domain;
+package com.wz.modularmonolithexample.orders.application;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.wz.modularmonolithexample.orders.domain.Order;
+import com.wz.modularmonolithexample.orders.domain.OrderFactory;
+import com.wz.modularmonolithexample.orders.domain.OrdersRepository;
+
 import lombok.RequiredArgsConstructor;
-import com.wz.modularmonolithexample.dtos.OrderCreateDTO;
-import com.wz.modularmonolithexample.dtos.OrderDTO;
 
 @Service
 @RequiredArgsConstructor
 public class OrdersService {
+
+    private static final ModelMapper mapper = new ModelMapper();
 
     private final OrdersRepository ordersRepository;
 
@@ -18,14 +23,13 @@ public class OrdersService {
 
     public OrderDTO getOrder(String id) {
         return ordersRepository.findById(id)
-                               .map(Order::toDTO)
-                                .orElseThrow(() -> new RuntimeException(String.format("Order with id %s not found", id)));
+                               .map(this::entityToDto)
+                               .orElseThrow(() -> new RuntimeException(String.format("Order with id %s not found", id)));
     }
 
     public Page<OrderDTO> getOrders(Pageable pageable) {
-        return ordersRepository.findAll(pageable).map(Order::toDTO);
+        return ordersRepository.findAll(pageable).map(this::entityToDto);
     }
-
 
     public void createOrder(OrderCreateDTO orderCreateDTO) {
         orderFactory.create(orderCreateDTO).save();
@@ -33,6 +37,12 @@ public class OrdersService {
 
     public void updateProductName(String productId, String productName) {
         ordersRepository.updateProductNameByProductId(productId, productName);
+    }
+
+    private OrderDTO entityToDto(Order order) {
+        var dto = new OrderDTO();
+        mapper.map(order, dto);
+        return dto;
     }
 
 }

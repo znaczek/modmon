@@ -1,4 +1,4 @@
-package com.wz.modularmonolithexample.orders.infrastructure;
+package com.wz.modularmonolithexample.orders.presentation;
 
 import java.util.List;
 
@@ -15,10 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wz.modularmonolithexample.orders.application.OrderCreateDTO;
+import com.wz.modularmonolithexample.orders.application.OrderDTO;
+import com.wz.modularmonolithexample.orders.application.OrdersService;
+
 import lombok.RequiredArgsConstructor;
-import com.wz.modularmonolithexample.dtos.OrderCreateDTO;
-import com.wz.modularmonolithexample.dtos.OrderDTO;
-import com.wz.modularmonolithexample.orders.domain.OrdersService;
 
 @RestController
 @RequiredArgsConstructor

@@ -1,12 +1,11 @@
-package com.wz.modularmonolithexample.dtos;
+package com.wz.modularmonolithexample.products.application;
 
 import java.math.BigDecimal;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 
-@Getter
-public class ProductUpdatedEvent {
+@Data
+public class ProductDTO {
 
     private String id;
 
@@ -15,5 +14,4 @@ public class ProductUpdatedEvent {
     private String description;
 
     private BigDecimal price;
-
 }

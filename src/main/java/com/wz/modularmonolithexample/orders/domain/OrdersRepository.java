@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-interface OrdersRepository extends JpaRepository<Order, String> {
+public interface OrdersRepository extends JpaRepository<Order, String> {
 
     @Transactional
     @Modifying

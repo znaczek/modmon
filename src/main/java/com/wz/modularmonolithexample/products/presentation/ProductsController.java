@@ -1,4 +1,4 @@
-package com.wz.modularmonolithexample.products.infrastructure;
+package com.wz.modularmonolithexample.products.presentation;
 
 import java.util.List;
 
@@ -14,9 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wz.modularmonolithexample.products.application.ProductDTO;
+import com.wz.modularmonolithexample.products.application.ProductsService;
+
 import lombok.RequiredArgsConstructor;
-import com.wz.modularmonolithexample.dtos.ProductDTO;
-import com.wz.modularmonolithexample.products.domain.ProductsService;
 
 @RestController
 @RequiredArgsConstructor
