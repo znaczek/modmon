@@ -16,3 +16,12 @@ spring:
       password: admin
       liquibase:
         change-log: classpath:products/liquibase/changelog.xml
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,modulith"
+  tracing:
+    sampling:
+      probability: 1

@@ -1,4 +1,4 @@
-package com.wz.modularmonolithexample.configuration;
+package com.wz.modularmonolithexample.orders.infrastructure;
 
 import java.util.Objects;
 
@@ -12,6 +12,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -22,43 +23,46 @@ import liquibase.integration.spring.SpringLiquibase;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = {"com.wz.modularmonolithexample.products.domain"}, entityManagerFactoryRef = "productsEntityManagerFactory",
-                       transactionManagerRef = "productsTransactionManager")
-@EntityScan("com.wz.modularmonolithexample.products.domain.*")
-public class ProductsPersistenceConfiguration {
+@EnableJpaRepositories(basePackages = {"com.wz.modularmonolithexample.orders.domain"}, entityManagerFactoryRef =
+        "ordersEntityManagerFactory", transactionManagerRef = "ordersTransactionManager")
+@EntityScan("com.wz.modularmonolithexample.orders.domain")
+public class OrdersPersistenceConfiguration {
 
     @Bean
-    @ConfigurationProperties("spring.datasource.products")
-    public DataSourceProperties productsDataSourceProperties() {
+    @ConfigurationProperties("spring.datasource.orders")
+    public DataSourceProperties ordersDataSourceProperties() {
         return new DataSourceProperties();
     }
 
     @Bean
-    public DataSource productsDataSource() {
-        return productsDataSourceProperties().initializeDataSourceBuilder().build();
+    @Primary
+    public DataSource ordersDataSource() {
+        return ordersDataSourceProperties().initializeDataSourceBuilder().build();
     }
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean productsEntityManagerFactory(@Qualifier("productsDataSource") DataSource dataSource,
-                                                                               EntityManagerFactoryBuilder builder) {
-        return builder.dataSource(dataSource).packages("com.wz.modularmonolithexample.products.domain").build();
+    @Primary
+    public LocalContainerEntityManagerFactoryBean ordersEntityManagerFactory(@Qualifier("ordersDataSource") DataSource dataSource,
+                                                                             EntityManagerFactoryBuilder builder) {
+        return builder.dataSource(dataSource).packages("com.wz.modularmonolithexample.orders.domain").build();
     }
 
     @Bean
-    public PlatformTransactionManager productsTransactionManager(
-            @Qualifier("productsEntityManagerFactory") LocalContainerEntityManagerFactoryBean productsEntityManagerFactory) {
-        return new JpaTransactionManager(Objects.requireNonNull(productsEntityManagerFactory.getObject()));
+    @Qualifier("ordersTransactionManager")
+    public PlatformTransactionManager ordersTransactionManager(
+            @Qualifier("ordersEntityManagerFactory") LocalContainerEntityManagerFactoryBean ordersEntityManagerFactory) {
+        return new JpaTransactionManager(Objects.requireNonNull(ordersEntityManagerFactory.getObject()));
     }
 
     @Bean
-    @ConfigurationProperties(prefix = "spring.datasource.products.liquibase")
-    public LiquibaseProperties productsLiquibaseProperties() {
+    @ConfigurationProperties(prefix = "spring.datasource.orders.liquibase")
+    public LiquibaseProperties ordersLiquibaseProperties() {
         return new LiquibaseProperties();
     }
 
     @Bean
-    public SpringLiquibase productsLiquibase() {
-        return springLiquibase(productsDataSource(), productsLiquibaseProperties());
+    public SpringLiquibase ordersLiquibase() {
+        return springLiquibase(ordersDataSource(), ordersLiquibaseProperties());
     }
 
     private static SpringLiquibase springLiquibase(DataSource dataSource, LiquibaseProperties properties) {

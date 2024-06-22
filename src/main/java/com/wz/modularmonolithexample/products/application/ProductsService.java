@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.wz.modularmonolithexample.products.domain.Product;
 import com.wz.modularmonolithexample.products.domain.ProductsRepository;
+import com.wz.modularmonolithexample.shared.exceptions.NotFoundException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,9 +25,11 @@ public class ProductsService {
     private final ProductsRepository productsRepository;
 
     public ProductDTO getProduct(String id) {
-        return productsRepository.findById(id)
-                                 .map(this::entityToDto)
-                                 .orElseThrow(() -> new RuntimeException(String.format("Product with id %s not found", id)));
+        return productsRepository.findById(id).map(this::entityToDto).orElseThrow(() -> notFoundException(id));
+    }
+
+    private NotFoundException notFoundException(String id) {
+        return new NotFoundException(String.format("Product with id %s not found", id));
     }
 
     public Page<ProductDTO> getProducts(Pageable pageable) {
@@ -35,7 +38,7 @@ public class ProductsService {
 
     public void updateProduct(ProductDTO productDTO, String id) {
         var existingProduct = productsRepository.findById(id)
-                                                .orElseThrow(() -> new RuntimeException(
+                                                .orElseThrow(() -> new NotFoundException(
                                                         String.format("Product with id %s not found", productDTO.getId())));
         existingProduct.update(productDTO);
     }

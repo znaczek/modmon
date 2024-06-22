@@ -15,4 +15,8 @@ public class OrderDTO {
 
     private BigDecimal price;
 
+    private String status;
+
+    private String paymentReference;
+
 }

@@ -1,6 +1,7 @@
 package com.wz.modularmonolithexample.shared.persistence;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -24,7 +25,15 @@ public class RepositoryInjector {
         } else if (result instanceof Page) {
             ((Page<?>) result).getContent().forEach(autowirer::autowireBean);
         } else {
-            autowirer.autowireBean(result);
+            if (result != null) {
+                if (result instanceof Optional<?>) {
+                    if (((Optional<?>) result).isPresent()) {
+                        autowirer.autowireBean(((Optional<?>) result).get());
+                    }
+                } else {
+                    autowirer.autowireBean(result);
+                }
+            }
         }
 
     }

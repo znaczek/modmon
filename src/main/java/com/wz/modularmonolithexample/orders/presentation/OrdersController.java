@@ -40,8 +40,13 @@ public class OrdersController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void createOrder(@RequestBody OrderCreateDTO orderCreateDTO) {
-        ordersService.createOrder(orderCreateDTO);
+    public OrderDTO createOrder(@RequestBody OrderCreateDTO orderCreateDTO) {
+        return ordersService.createOrder(orderCreateDTO);
+    }
+
+    @PostMapping("/{id}/confirm")
+    public void confirm(@PathVariable String id) {
+        ordersService.confirm(id);
     }
 
     private <T> ResponseEntity<List<T>> toResponseEntity(Page<T> page) {

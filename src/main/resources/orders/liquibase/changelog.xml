@@ -27,8 +27,12 @@
             <column name="price" type="DECIMAL(10,2)">
                 <constraints nullable="false"/>
             </column>
+
+            <column name="status" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="payment_reference" type="VARCHAR(100)"/>
         </createTable>
     </changeSet>
-
-    <include file="data/data-load.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

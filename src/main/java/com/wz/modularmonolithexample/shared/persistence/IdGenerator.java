@@ -4,7 +4,6 @@ import java.time.Instant;
 
 public class IdGenerator {
 
-
     private static Long lastTimestamp = null;
 
     private static long sequence = 0L;
@@ -16,8 +15,7 @@ public class IdGenerator {
     }
 
     public static synchronized String generateId() {
-        long currentTimestamp =  Instant.now().getEpochSecond();
-
+        long currentTimestamp = Instant.now().getEpochSecond();
 
         if (lastTimestamp != null && currentTimestamp == lastTimestamp) {
             sequence = sequence + 1;

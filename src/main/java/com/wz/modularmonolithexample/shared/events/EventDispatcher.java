@@ -1,4 +1,4 @@
-package com.wz.modularmonolithexample.shared.event;
+package com.wz.modularmonolithexample.shared.events;
 
 public interface EventDispatcher {
 
