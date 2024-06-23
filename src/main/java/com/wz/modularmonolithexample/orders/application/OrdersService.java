@@ -35,11 +35,12 @@ public class OrdersService {
         return entityToDto(orderFactory.create(orderCreateDTO));
     }
 
-    @Transactional("ordersTransactionManager")
+    @Transactional
     public void updateProductName(String productId, String productName) {
         ordersRepository.updateProductNameByProductId(productId, productName);
     }
 
+    @Transactional
     public void confirm(String orderId) {
         get(orderId).confirm();
     }

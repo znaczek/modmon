@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Entity
-@Table(name = "orders")
+@Table(name = "orders", schema = "orders")
 public class Order {
 
     @Transient
@@ -73,7 +73,6 @@ public class Order {
         ordersRepository.save(this);
     }
 
-    @Transactional("ordersTransactionManager")
     public void confirm() {
         if (status != Status.CREATED) {
             throw new IllegalStateException("Only create order can be confirmed");
@@ -84,7 +83,7 @@ public class Order {
         log.info("Order {} confirmed", id);
     }
 
-    @Transactional("ordersTransactionManager")
+    @Transactional
     public void complete(String paymentReference) {
         this.paymentReference = paymentReference;
         this.status = Status.COMPLETED;

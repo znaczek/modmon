@@ -7,7 +7,7 @@
                             http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
     <changeSet id="create_orders_table" author="wz">
-        <createTable tableName="orders">
+        <createTable tableName="orders" schemaName="orders">
             <column name="id" type="VARCHAR(50)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>

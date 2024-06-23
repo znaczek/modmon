@@ -11,7 +11,6 @@ import jakarta.persistence.Transient;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.wz.modularmonolithexample.products.application.ProductDTO;
 import com.wz.modularmonolithexample.products.application.ProductUpdatedEvent;
@@ -21,7 +20,7 @@ import lombok.Getter;
 
 @Getter
 @Entity
-@Table(name = "products")
+@Table(name = "products", schema = "products")
 public class Product {
 
     private final static ModelMapper mapper = new ModelMapper();
@@ -52,7 +51,6 @@ public class Product {
     @Column(name = "price")
     private BigDecimal price;
 
-    @Transactional("productsTransactionManager")
     public void update(ProductDTO product) {
         this.name = product.getName();
         this.description = product.getDescription();

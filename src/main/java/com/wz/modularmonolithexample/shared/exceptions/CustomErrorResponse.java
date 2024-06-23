@@ -10,9 +10,13 @@ import lombok.Getter;
 public class CustomErrorResponse {
 
     private int status;
+
     private String message;
+
     private String error;
+
     private String timestamp;
+
     private String path;
 
     public CustomErrorResponse(HttpStatus status, String message, String path) {

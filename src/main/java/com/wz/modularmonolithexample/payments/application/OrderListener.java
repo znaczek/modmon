@@ -1,8 +1,8 @@
 package com.wz.modularmonolithexample.payments.application;
 
-import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.event.TransactionalEventListener;
 
 import com.wz.modularmonolithexample.orders.application.OrderConfirmedEvent;
 import com.wz.modularmonolithexample.payments.infrastructure.Payment3PartyClient;
@@ -21,7 +21,7 @@ public class OrderListener {
     private final EventDispatcher eventDispatcher;
 
     @Async
-    @EventListener
+    @TransactionalEventListener
     public void handleOrderConfirmation(OrderConfirmedEvent event) {
         log.info("OrderConfirmedEvent captured: {}", event);
         var paymentReference = paymentClient.completePayment(event.getPrice());

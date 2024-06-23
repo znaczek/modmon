@@ -7,6 +7,10 @@
 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
     <changeSet id="products_data_load" author="wz">
-        <loadUpdateData primaryKey="id" tableName="products" file="products.csv" relativeToChangelogFile="true"/>
+        <loadUpdateData primaryKey="id"
+                        tableName="products"
+                        schemaName="products"
+                        file="products.csv"
+                        relativeToChangelogFile="true"/>
     </changeSet>
 </databaseChangeLog>

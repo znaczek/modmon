@@ -5,6 +5,7 @@ import org.modelmapper.config.Configuration;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.wz.modularmonolithexample.products.domain.Product;
 import com.wz.modularmonolithexample.products.domain.ProductsRepository;
@@ -36,6 +37,7 @@ public class ProductsService {
         return productsRepository.findAll(pageable).map(this::entityToDto);
     }
 
+    @Transactional
     public void updateProduct(ProductDTO productDTO, String id) {
         var existingProduct = productsRepository.findById(id)
                                                 .orElseThrow(() -> new NotFoundException(

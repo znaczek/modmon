@@ -18,7 +18,7 @@ public class OrderFactory {
 
     private final ProductsRepository productsRepository;
 
-    @Transactional("ordersTransactionManager")
+    @Transactional
     public Order create(OrderCreateDTO orderCreateDTO) {
         var product = productsRepository.getById(orderCreateDTO.getProductId());
         var order = new Order(orderCreateDTO.getCustomerEmail(), product.getId(), product.getName(), product.getPrice());

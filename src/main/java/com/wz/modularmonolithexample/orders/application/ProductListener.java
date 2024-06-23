@@ -1,8 +1,8 @@
 package com.wz.modularmonolithexample.orders.application;
 
-import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.event.TransactionalEventListener;
 
 import com.wz.modularmonolithexample.products.application.ProductUpdatedEvent;
 
@@ -17,7 +17,7 @@ public class ProductListener {
     private final OrdersService ordersService;
 
     @Async
-    @EventListener
+    @TransactionalEventListener
     public void handleProductUpdated(ProductUpdatedEvent event) {
         log.info("ProductUpdatedEvent captured: {}", event);
         ordersService.updateProductName(event.getId(), event.getName());
